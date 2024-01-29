@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quick-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: quick-app
+  template:
+    metadata:
+      labels:
+        app: quick-app
+    spec:
+      containers:
+      - name: container-builder
+        image: ${BASE_IMAGE}
+        command: ["tail", "-f", "/dev/null"]
+        ports:
+        - containerPort: 22  # Expose SSH port
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"

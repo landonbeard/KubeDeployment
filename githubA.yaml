@@ -1,0 +1,68 @@
+#Work in progress
+
+# name: CI/CD Pipeline
+
+# # Define when the workflow should run
+# on:
+#   # Allows manual triggering with specified inputs
+#   workflow_dispatch:
+#     inputs:
+#       base_image:
+#         description: 'Base Image'
+#         required: true
+#         default: 'replace-your-docker-image'
+#       packages:
+#         description: 'Packages'
+#         required: false
+#         default: 'default-packages'
+#       cpu_request:
+#         description: 'CPU Request'
+#         required: false
+#         default: '500m'
+#       memory_request:
+#         description: 'Memory Request'
+#         required: false
+#         default: '512Mi'
+#   # Triggers the workflow on push events to the main branch
+#   push:
+#     branches: [ main ]
+#   # Triggers the workflow on pull request events targeting the main branch
+#   pull_request:
+#     branches: [ main ]
+
+# # Defines the jobs to be run
+# jobs:
+#   build-and-deploy:
+#     # Specifies the type of runner that the job will run on
+#     runs-on: ubuntu-latest
+#     # Use a container for running the job steps
+#     container: 
+#       image: ${{ github.event.inputs.base_image || 'replace-your-docker-image' }}
+
+#     steps:
+#     # Checks out the repository under $GITHUB_WORKSPACE, so the job can access it
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+
+#     # Configures AWS credentials from GitHub secrets
+#     - name: Configure AWS Credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-west-2
+
+#     # Installs kubectl command-line tool
+#     - name: Install kubectl
+#       run: |
+#         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#         chmod +x ./kubectl
+#         sudo mv ./kubectl /usr/local/bin/kubectl
+
+#     # Deploys the application to EKS using kubectl
+#     - name: Deploy to EKS
+#       run: kubectl apply -f deployment.yaml --namespace=default
+#       
+
+
+#The BASE_IMAGE substitution must be handled separately as GitHub Actions does not support in-line substitutions

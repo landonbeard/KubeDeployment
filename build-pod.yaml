@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quick-deployment-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quick-app
+  template:
+    metadata:
+      labels:
+        app: quick-app
+    spec:
+      containers:
+      - name: test-container
+        image: ${BASE_IMAGE}
+        command: ["tail", "-f", "/dev/null"]
